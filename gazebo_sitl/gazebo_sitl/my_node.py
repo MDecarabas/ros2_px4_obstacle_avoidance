@@ -1,29 +1,47 @@
 #!/usr/bin/env python3
 import rclpy
 import asyncio
-
-from rclpy.node import Node
-from std_msgs.msg import String
+import time
 
 from mavsdk import System
 from mavsdk.mission import (MissionItem, MissionPlan)
-import time
+
+from rclpy.node import Node
+from std_msgs.msg import String
+from rclpy.callback_groups import ReentrantCallbackGroup
+
+
+from nu_mavsdk_interfaces.srv import WayPoint
 
 
 class MinimalPublisher(Node):
     def __init__(self):
         super().__init__('minimal_publisher')
+        self.cbgroup = ReentrantCallbackGroup()
 
         self.droneSetup = self.droneInit()
 
+        self.MissionPlanSrv = self.create_service(WayPoint, "waypoint", self.callback, callback_group=self.cbgroup)
+
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.droneInit())
-
+#####
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.MissionPlan())
 
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.executeMission())
+
+
+    async def callback(self, request, response):
+
+        self.lat = request.lat
+        self.lon = request.lon
+        self.alt = request.alt
+
+        response.uploaded == True     
+
+        return response
 
 
     async def droneInit(self):
@@ -79,9 +97,9 @@ class MinimalPublisher(Node):
         print("-- Starting mission")
         await self.drone.mission.start_mission()
 
-        time.sleep(10)
+        # time.sleep(10)
 
-        await self.drone.mission.clear_mission()
+        # await self.drone.mission.clear_mission()
 
 
         await self.termination_task
@@ -98,6 +116,9 @@ class MinimalPublisher(Node):
             print(f"Mission progress: "
                 f"{mission_progress.current}/"
                 f"{mission_progress.total}")
+
+    async def recalculatePath(self):
+        pass
 
 
     async def observe_is_in_air(self, drone, running_tasks):
