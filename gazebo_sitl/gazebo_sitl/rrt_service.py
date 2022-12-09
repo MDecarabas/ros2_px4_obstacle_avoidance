@@ -4,11 +4,14 @@ from rclpy.node import Node
 import random
 import math
 
+from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path given start coordinates and end goal
+
 
 class RRT(Node):
     def __init__(self, x, y):
         super().__init__('rrt_service')
-        self.srv = self.create_service(RRT_Service, 'rrt_points', self.rrt_points)
+
+        self.srv = self.create_service(RRTService, 'rrt_points', self.rrt_points)
 
         self.x = x
         self.y = y
@@ -16,11 +19,18 @@ class RRT(Node):
 
 
 def get_random_point(x_min, x_max, y_min, y_max):
+    '''
+    get_random_point takes in x & y minimum and maximum locations to generate a random point for the RRT to search a path to.
+    The function returns a call to the RRT class to search for a pathway to the points
+    '''
     x = random.uniform(x_min, x_max)
     y = random.uniform(y_min, y_max)
     return RRT(x, y)
 
 def get_nearest_node(tree, point):
+    '''
+    get_nearest_node finds the nearest node from current position and generates a minimum distance trajectory. 
+    '''
     min_dist = float('inf')
     min_node = None
     for node in tree:
@@ -73,9 +83,10 @@ def rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
 
 
 def rrt_points(self, request, response):
-    start = RRT(0, 0)
-    goal = RRT(20, 5)
-
+    # start = RRT(0, 0)
+    # goal = RRT(20, 5)
+    start = request.start
+    goal = request.goal
 
 # 7.5 x 0.2
     obstacles = [[(1, 1), (3.5, -3.5)], [(-2.5, 6), (3.5, 6.5)], [(6, 6), (-0.5, 6.5)],  [(5.5, 13.5), (-2.5, -6.5)], [(19, 19), (3.5, -3.5)]]
@@ -87,11 +98,17 @@ def rrt_points(self, request, response):
     max_iter = 1000
     path = rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
     if path:
-        pass
+        response.path.x = []
+        response.path.y = []
+        for i in range(len(path) - 1):
+            response.path.x.append(path[i].x)
+            response.path.y.append(path[i].y)       
+        response.path.x.reverse()
+        response.path.y.reverse()
     else:
         path = rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
 
-    return
+    return response
 
 
 def main(args=None):
@@ -105,10 +122,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-
-# def add_two_ints_callback(self, request, response):
-#         response.sum = request.a + request.b
-#         self.get_logger().info('Incoming request\na: %d b: %d' % (request.a, request.b))
-
-#         return response

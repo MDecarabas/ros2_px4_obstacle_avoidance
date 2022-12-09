@@ -1,4 +1,5 @@
 float64 start
 float64 goal
 ---
-float64[] path
+float64[] path.x
+float64[] path.y
