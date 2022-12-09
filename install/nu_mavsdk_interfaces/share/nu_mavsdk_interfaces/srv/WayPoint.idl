@@ -1,0 +1,19 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from nu_mavsdk_interfaces/srv/WayPoint.srv
+// generated code does not contain a copyright notice
+
+
+module nu_mavsdk_interfaces {
+  module srv {
+    struct WayPoint_Request {
+      double lat;
+
+      double lon;
+
+      double alt;
+    };
+    struct WayPoint_Response {
+      boolean uploaded;
+    };
+  };
+};
