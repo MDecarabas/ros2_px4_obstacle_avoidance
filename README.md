@@ -56,7 +56,7 @@ The process loop of the drone SITL is as follows:
 2. Drone executor node receives discretized path and then follows it till completion
 
 ## Demonstrations
-A video demonstration can be viewed at the following link: https://youtu.be/On3OisquyMc
+A video demonstration can be viewed at the following link: https://youtu.be/L3y7zEAqGSs
 
 
 ## *Python Dependencies*
