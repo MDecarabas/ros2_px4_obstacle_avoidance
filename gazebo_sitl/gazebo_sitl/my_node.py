@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 import rclpy
 import asyncio
-import time
 
 from mavsdk import System
 from mavsdk.offboard import (PositionNedYaw, OffboardError)
 
 from rclpy.node import Node
-from std_msgs.msg import String
 from rclpy.callback_groups import ReentrantCallbackGroup
-
 
 from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path given start coordinates and end goal
 
-
-class MinimalPublisher(Node):
+class DroneExecute(Node):
     def __init__(self):
-        super().__init__('minimal_publisher')
+        super().__init__('drone_execute')
         self.cbgroup = ReentrantCallbackGroup()
 
         self.droneSetup = self.droneInit()
 
-        self.RRT_client = self.create_client(RRTService, 'rrt_points')             #Client for rrt points of interest initialized
+        self.RRT_client = self.create_client(RRTService, 'rrt_points')             #Client for rrt points initialized
         self.RRT_Request = RRTService.Request()
 
         while not self.RRT_client.wait_for_service(timeout_sec=1.0):
@@ -39,7 +35,7 @@ class MinimalPublisher(Node):
 
         self.future = self.RRT_client.call_async(self.RRT_Request)
         rclpy.spin_until_future_complete(self, self.future)
-        
+
         return self.future.result()
 
 
@@ -66,6 +62,11 @@ class MinimalPublisher(Node):
 
     async def run(self):
 
+        start = [0, 0]
+        goal = [0, 0]
+
+        rrtResponse = self.rrtRequest(start, goal)
+
         print("-- Setting initial setpoint")
         await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, 0.0, 0.0))
 
@@ -87,12 +88,12 @@ class MinimalPublisher(Node):
         await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, -10.0, 0.0))
         await asyncio.sleep(5)
 
-        blah_x = 20
-        blah_y = 20
+        rrtResponse.path_x = 20
+        rrtResponse.path_y = 20
 
-        for i in range(len(blah_x)):
+        for i in range(len(rrtResponse.path_x)):
 
-            await self.drone.offboard.set_position_ned(PositionNedYaw(blah_x, blah_y, -10.0, 0.0))
+            await self.drone.offboard.set_position_ned(PositionNedYaw(rrtResponse.path_x[i], rrtResponse.path_y[i], -10.0, 0.0))
             await asyncio.sleep(5)
 
         await self.drone.action.land()
@@ -101,7 +102,7 @@ class MinimalPublisher(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_publisher = MinimalPublisher()
+    minimal_publisher = DroneExecute()
 
     rclpy.spin(minimal_publisher)
 
