@@ -1,14 +1,14 @@
 // generated from rosidl_typesupport_fastrtps_cpp/resource/idl__rosidl_typesupport_fastrtps_cpp.hpp.em
-// with input from nu_mavsdk_interfaces:srv/WayPoint.idl
+// with input from nu_mavsdk_interfaces:srv/RRTService.idl
 // generated code does not contain a copyright notice
 
-#ifndef NU_MAVSDK_INTERFACES__SRV__DETAIL__WAY_POINT__ROSIDL_TYPESUPPORT_FASTRTPS_CPP_HPP_
-#define NU_MAVSDK_INTERFACES__SRV__DETAIL__WAY_POINT__ROSIDL_TYPESUPPORT_FASTRTPS_CPP_HPP_
+#ifndef NU_MAVSDK_INTERFACES__SRV__DETAIL__RRT_SERVICE__ROSIDL_TYPESUPPORT_FASTRTPS_CPP_HPP_
+#define NU_MAVSDK_INTERFACES__SRV__DETAIL__RRT_SERVICE__ROSIDL_TYPESUPPORT_FASTRTPS_CPP_HPP_
 
 #include "rosidl_runtime_c/message_type_support_struct.h"
 #include "rosidl_typesupport_interface/macros.h"
 #include "nu_mavsdk_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h"
-#include "nu_mavsdk_interfaces/srv/detail/way_point__struct.hpp"
+#include "nu_mavsdk_interfaces/srv/detail/rrt_service__struct.hpp"
 
 #ifndef _WIN32
 # pragma GCC diagnostic push
@@ -36,24 +36,24 @@ namespace typesupport_fastrtps_cpp
 bool
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 cdr_serialize(
-  const nu_mavsdk_interfaces::srv::WayPoint_Request & ros_message,
+  const nu_mavsdk_interfaces::srv::RRTService_Request & ros_message,
   eprosima::fastcdr::Cdr & cdr);
 
 bool
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 cdr_deserialize(
   eprosima::fastcdr::Cdr & cdr,
-  nu_mavsdk_interfaces::srv::WayPoint_Request & ros_message);
+  nu_mavsdk_interfaces::srv::RRTService_Request & ros_message);
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 get_serialized_size(
-  const nu_mavsdk_interfaces::srv::WayPoint_Request & ros_message,
+  const nu_mavsdk_interfaces::srv::RRTService_Request & ros_message,
   size_t current_alignment);
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
-max_serialized_size_WayPoint_Request(
+max_serialized_size_RRTService_Request(
   bool & full_bounded,
   bool & is_plain,
   size_t current_alignment);
@@ -71,7 +71,7 @@ extern "C"
 
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 const rosidl_message_type_support_t *
-  ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, nu_mavsdk_interfaces, srv, WayPoint_Request)();
+  ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, nu_mavsdk_interfaces, srv, RRTService_Request)();
 
 #ifdef __cplusplus
 }
@@ -84,7 +84,7 @@ const rosidl_message_type_support_t *
 // already included above
 // #include "nu_mavsdk_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h"
 // already included above
-// #include "nu_mavsdk_interfaces/srv/detail/way_point__struct.hpp"
+// #include "nu_mavsdk_interfaces/srv/detail/rrt_service__struct.hpp"
 
 #ifndef _WIN32
 # pragma GCC diagnostic push
@@ -113,24 +113,24 @@ namespace typesupport_fastrtps_cpp
 bool
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 cdr_serialize(
-  const nu_mavsdk_interfaces::srv::WayPoint_Response & ros_message,
+  const nu_mavsdk_interfaces::srv::RRTService_Response & ros_message,
   eprosima::fastcdr::Cdr & cdr);
 
 bool
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 cdr_deserialize(
   eprosima::fastcdr::Cdr & cdr,
-  nu_mavsdk_interfaces::srv::WayPoint_Response & ros_message);
+  nu_mavsdk_interfaces::srv::RRTService_Response & ros_message);
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 get_serialized_size(
-  const nu_mavsdk_interfaces::srv::WayPoint_Response & ros_message,
+  const nu_mavsdk_interfaces::srv::RRTService_Response & ros_message,
   size_t current_alignment);
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
-max_serialized_size_WayPoint_Response(
+max_serialized_size_RRTService_Response(
   bool & full_bounded,
   bool & is_plain,
   size_t current_alignment);
@@ -148,7 +148,7 @@ extern "C"
 
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 const rosidl_message_type_support_t *
-  ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, nu_mavsdk_interfaces, srv, WayPoint_Response)();
+  ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, nu_mavsdk_interfaces, srv, RRTService_Response)();
 
 #ifdef __cplusplus
 }
@@ -168,10 +168,10 @@ extern "C"
 
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_nu_mavsdk_interfaces
 const rosidl_service_type_support_t *
-  ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, nu_mavsdk_interfaces, srv, WayPoint)();
+  ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_fastrtps_cpp, nu_mavsdk_interfaces, srv, RRTService)();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // NU_MAVSDK_INTERFACES__SRV__DETAIL__WAY_POINT__ROSIDL_TYPESUPPORT_FASTRTPS_CPP_HPP_
+#endif  // NU_MAVSDK_INTERFACES__SRV__DETAIL__RRT_SERVICE__ROSIDL_TYPESUPPORT_FASTRTPS_CPP_HPP_

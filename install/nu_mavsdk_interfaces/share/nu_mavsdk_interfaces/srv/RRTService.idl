@@ -1,0 +1,19 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from nu_mavsdk_interfaces/srv/RRTService.srv
+// generated code does not contain a copyright notice
+
+
+module nu_mavsdk_interfaces {
+  module srv {
+    struct RRTService_Request {
+      double start;
+
+      double goal;
+    };
+    struct RRTService_Response {
+      sequence<double> path_x;
+
+      sequence<double> path_y;
+    };
+  };
+};

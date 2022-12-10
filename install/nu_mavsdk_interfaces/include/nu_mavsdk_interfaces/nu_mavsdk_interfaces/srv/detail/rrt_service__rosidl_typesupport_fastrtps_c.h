@@ -1,8 +1,8 @@
 // generated from rosidl_typesupport_fastrtps_c/resource/idl__rosidl_typesupport_fastrtps_c.h.em
-// with input from nu_mavsdk_interfaces:srv/WayPoint.idl
+// with input from nu_mavsdk_interfaces:srv/RRTService.idl
 // generated code does not contain a copyright notice
-#ifndef NU_MAVSDK_INTERFACES__SRV__DETAIL__WAY_POINT__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
-#define NU_MAVSDK_INTERFACES__SRV__DETAIL__WAY_POINT__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
+#ifndef NU_MAVSDK_INTERFACES__SRV__DETAIL__RRT_SERVICE__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
+#define NU_MAVSDK_INTERFACES__SRV__DETAIL__RRT_SERVICE__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
 
 
 #include <stddef.h>
@@ -16,19 +16,19 @@ extern "C"
 #endif
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
-size_t get_serialized_size_nu_mavsdk_interfaces__srv__WayPoint_Request(
+size_t get_serialized_size_nu_mavsdk_interfaces__srv__RRTService_Request(
   const void * untyped_ros_message,
   size_t current_alignment);
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
-size_t max_serialized_size_nu_mavsdk_interfaces__srv__WayPoint_Request(
+size_t max_serialized_size_nu_mavsdk_interfaces__srv__RRTService_Request(
   bool & full_bounded,
   bool & is_plain,
   size_t current_alignment);
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
 const rosidl_message_type_support_t *
-ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, nu_mavsdk_interfaces, srv, WayPoint_Request)();
+ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, nu_mavsdk_interfaces, srv, RRTService_Request)();
 
 #ifdef __cplusplus
 }
@@ -49,19 +49,19 @@ extern "C"
 #endif
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
-size_t get_serialized_size_nu_mavsdk_interfaces__srv__WayPoint_Response(
+size_t get_serialized_size_nu_mavsdk_interfaces__srv__RRTService_Response(
   const void * untyped_ros_message,
   size_t current_alignment);
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
-size_t max_serialized_size_nu_mavsdk_interfaces__srv__WayPoint_Response(
+size_t max_serialized_size_nu_mavsdk_interfaces__srv__RRTService_Response(
   bool & full_bounded,
   bool & is_plain,
   size_t current_alignment);
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
 const rosidl_message_type_support_t *
-ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, nu_mavsdk_interfaces, srv, WayPoint_Response)();
+ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, nu_mavsdk_interfaces, srv, RRTService_Response)();
 
 #ifdef __cplusplus
 }
@@ -80,10 +80,10 @@ extern "C"
 
 ROSIDL_TYPESUPPORT_FASTRTPS_C_PUBLIC_nu_mavsdk_interfaces
 const rosidl_service_type_support_t *
-ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, nu_mavsdk_interfaces, srv, WayPoint)();
+ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, nu_mavsdk_interfaces, srv, RRTService)();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // NU_MAVSDK_INTERFACES__SRV__DETAIL__WAY_POINT__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_
+#endif  // NU_MAVSDK_INTERFACES__SRV__DETAIL__RRT_SERVICE__ROSIDL_TYPESUPPORT_FASTRTPS_C_H_

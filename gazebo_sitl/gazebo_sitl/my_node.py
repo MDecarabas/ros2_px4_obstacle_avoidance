@@ -4,14 +4,14 @@ import asyncio
 import time
 
 from mavsdk import System
-from mavsdk.mission import (MissionItem, MissionPlan)
+from mavsdk.offboard import (PositionNedYaw, OffboardError)
 
 from rclpy.node import Node
 from std_msgs.msg import String
 from rclpy.callback_groups import ReentrantCallbackGroup
 
 
-from nu_mavsdk_interfaces.srv import WayPoint
+from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path given start coordinates and end goal
 
 
 class MinimalPublisher(Node):
@@ -21,30 +21,17 @@ class MinimalPublisher(Node):
 
         self.droneSetup = self.droneInit()
 
-        self.MissionPlanSrv = self.create_service(WayPoint, "waypoint", self.callback, callback_group=self.cbgroup)
-
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.droneInit())
-#####
-        self.loop = asyncio.get_event_loop()
-        self.loop.run_until_complete(self.MissionPlan())
 
         self.loop = asyncio.get_event_loop()
-        self.loop.run_until_complete(self.executeMission())
-
-
-    async def callback(self, request, response):
-
-        self.lat = request.lat
-        self.lon = request.lon
-        self.alt = request.alt
-
-        response.uploaded == True     
-
-        return response
+        self.loop.run_until_complete(self.run())
 
 
     async def droneInit(self):
+        """
+        droneInit function connects to the udp port of the drone, establishes a connection and arms the drone once the connection is secured 
+        """
         self.drone = System() #Initialize Drone
 
         await self.drone.connect(system_address="udp://:14540") #Connect to UDP sitl address 
@@ -53,37 +40,6 @@ class MinimalPublisher(Node):
             if state.is_connected:
                 print(f"-- Connected to drone!")
                 break
-        await self.drone.action.arm()
-
-    async def MissionPlan(self):
-
-        print_mission_progress_task = asyncio.ensure_future(self.print_mission_progress(self.drone))
-
-        running_tasks = [print_mission_progress_task]
-        self.termination_task = asyncio.ensure_future(self.observe_is_in_air(self.drone, running_tasks))
-
-        mission_items = []
-        mission_items.append(MissionItem(47.398039859999997,
-                                        8.5455725400000002,
-                                        25,
-                                        10,
-                                        True,
-                                        float('nan'),
-                                        float('nan'),
-                                        MissionItem.CameraAction.NONE,
-                                        float('nan'),
-                                        float('nan'),
-                                        float('nan'),
-                                        float('nan'),
-                                        float('nan')))
-
-
-        mission_plan = MissionPlan(mission_items)
-
-        await self.drone.mission.set_return_to_launch_after_mission(True)
-
-        print("-- Uploading mission")
-        await self.drone.mission.upload_mission(mission_plan)
 
         print("Waiting for drone to have a global position estimate...")
         async for health in self.drone.telemetry.health():
@@ -91,60 +47,39 @@ class MinimalPublisher(Node):
                 print("-- Global position estimate OK")
                 break
 
+        await self.drone.action.arm()
 
-    async def executeMission(self):
+    async def run(self):
+        print("-- Setting initial setpoint")
+        await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, 0.0, 0.0))
 
-        print("-- Starting mission")
-        await self.drone.mission.start_mission()
+        print("-- Starting offboard")
+        try:
+            await self.drone.offboard.start()
+        except OffboardError as error:
+            print(f"Starting offboard mode failed with error code: {error._result.result}")
+            print("-- Disarming")
+            await self.drone.action.disarm()
+            return
 
-        # time.sleep(10)
+        async def print_z_velocity(drone):
+            async for odom in self.drone.telemetry.position_velocity_ned():
+                print(f"{odom.velocity.north_m_s} {odom.velocity.down_m_s}")
 
-        # await self.drone.mission.clear_mission()
+        asyncio.ensure_future(print_z_velocity(self.drone))
 
+        await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, -10.0, 0.0))
+        await asyncio.sleep(5)
 
-        await self.termination_task
+        blah_x = 20
+        blah_y = 20
 
-    async def cancelMission(self):
+        for i in range(len(blah_x)):
 
-        print("-- Cancelling mission")
+            await self.drone.offboard.set_position_ned(PositionNedYaw(blah_x, blah_y, -10.0, 0.0))
+            await asyncio.sleep(5)
 
-        await self.drone.mission.clear_mission()
-        pass
-
-    async def print_mission_progress(self, drone):
-        async for mission_progress in drone.mission.mission_progress():
-            print(f"Mission progress: "
-                f"{mission_progress.current}/"
-                f"{mission_progress.total}")
-
-    async def recalculatePath(self):
-        pass
-
-
-    async def observe_is_in_air(self, drone, running_tasks):
-        """ 
-        Monitors whether the drone is flying or not and
-        returns after landing 
-        """
-
-        was_in_air = False
-
-        async for is_in_air in drone.telemetry.in_air():
-            if is_in_air:
-                was_in_air = is_in_air
-
-            if was_in_air and not is_in_air:
-                for task in running_tasks:
-                    task.cancel()
-                    try:
-                        await task
-                    except asyncio.CancelledError:
-                        pass
-                await asyncio.get_event_loop().shutdown_asyncgens()
-
-                return
-
-    
+        await self.drone.action.land()
 
 
 def main(args=None):
