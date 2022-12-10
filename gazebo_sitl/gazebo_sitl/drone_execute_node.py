@@ -12,6 +12,10 @@ from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path give
 
 class DroneExecute(Node):
     def __init__(self):
+        '''
+        init function that initializes all essential variables for the program to run as well as the required services
+        '''
+
         super().__init__('drone_execute')
         self.cbgroup = ReentrantCallbackGroup()
 
@@ -30,6 +34,9 @@ class DroneExecute(Node):
         self.loop.run_until_complete(self.run())
 
     def rrtRequest(self, start, goal):
+        '''
+        calls the rrt node to plan a path given a start point and the goal
+        '''
         self.RRT_Request.start = start
         self.RRT_Request.goal = goal
 

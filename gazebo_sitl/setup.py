@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'my_node = gazebo_sitl.my_node:main',
-            'rrt_service = gazebo_sitl.rrt_service:main'
+            'my_node = gazebo_sitl.drone_execute_node:main',
+            'rrt_service = gazebo_sitl.rrt_service_node:main'
         ],
     },
 )
