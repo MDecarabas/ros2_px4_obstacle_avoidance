@@ -21,11 +21,26 @@ class MinimalPublisher(Node):
 
         self.droneSetup = self.droneInit()
 
+        self.RRT_client = self.create_client(RRTService, 'rrt_points')             #Client for rrt points of interest initialized
+        self.RRT_Request = RRTService.Request()
+
+        while not self.RRT_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('service not available, waiting again...')
+
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.droneInit())
 
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.run())
+
+    def rrtRequest(self, start, goal):
+        self.RRT_Request.start = start
+        self.RRT_Request.goal = goal
+
+        self.future = self.RRT_client.call_async(self.RRT_Request)
+        rclpy.spin_until_future_complete(self, self.future)
+        
+        return self.future.result()
 
 
     async def droneInit(self):
@@ -50,6 +65,7 @@ class MinimalPublisher(Node):
         await self.drone.action.arm()
 
     async def run(self):
+
         print("-- Setting initial setpoint")
         await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, 0.0, 0.0))
 
