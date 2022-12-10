@@ -1,1 +1,2 @@
-ingredient_list: ["ingredient01", "ingredient02", "ingredient03"]
+start: [0.0, 0.0]
+goal: [20.0, 5.0]

@@ -11,17 +11,32 @@ from rcl_interfaces.msg import ParameterDescriptor
 from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path given start coordinates and end goal
 
 class DroneExecute(Node):
+
+    '''
+    The DroneExecute class contains the functions neccesary for a robot in a px4-autopilot gazebo simulation to fly around obstacles declared in the RRT service.
+    The functions inside DroneExecute are the init, droneInit rrtRequest and run functions. Init initializes the parameters and
+    functions used, droneInit initializes the communication between the gazebo sim and mavsdk, rrtRequest gets a discretized path plan, and run makes the drone
+    execute actions till the end point.
+        Typical usage example:
+            Execute = DroneExecute()
+    '''
     def __init__(self):
         '''
         init function that initializes all essential variables for the program to run as well as the required services
         '''
 
         super().__init__('drone_execute')
-
-        self.declare_parameter("x", 0.0, ParameterDescriptor(
+        self.altitude = -10                                                        #desired drone altitude 
+#Start & Goal Points declared in the yaml
+        self.declare_parameter("start", [0.0, 0.0], ParameterDescriptor(
             description="The x translation from base to world frame"))
+        self.start = self.get_parameter("start").get_parameter_value().double_value 
 
-        self.droneSetup = self.droneInit()
+        self.declare_parameter("goal", [20.0, 5.0], ParameterDescriptor(
+            description="The x translation from base to world frame"))
+        self.goal = self.get_parameter("goal").get_parameter_value().double_value
+
+        self.droneSetup = self.droneInit()                                         #drone initialization called
 
         self.RRT_client = self.create_client(RRTService, 'rrt_points')             #Client for rrt points initialized
         self.RRT_Request = RRTService.Request()
@@ -32,7 +47,7 @@ class DroneExecute(Node):
         self.loop.run_until_complete(self.droneInit())
 
         self.loop = asyncio.get_event_loop()
-        self.loop.run_until_complete(self.run())
+        self.loop.run_until_complete(self.run())                                 #run actions till completions
 
     def rrtRequest(self, start, goal):
         '''
@@ -69,39 +84,35 @@ class DroneExecute(Node):
         await self.drone.action.arm()
 
     async def run(self):
+        """
+        the run functions uses the mavsdk api to move the drone relative to its initial position to be able to navigate around the obstacles which the rrt path planner planned around
+        """
+        rrtResponse = self.rrtRequest(self.start, self.goal)
 
-        start = [0.0, 0.0]
-        goal = [0.0, 0.0]
-
-        rrtResponse = self.rrtRequest(start, goal)
-
-        print("-- Setting initial setpoint")
+        self.get_logger().info("-- Setting initial setpoint")
         await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, 0.0, 0.0))
 
-        print("-- Starting offboard")
+        self.get_logger().info("-- Starting offboard")
         try:
             await self.drone.offboard.start()
         except OffboardError as error:
-            print(f"Starting offboard mode failed with error code: {error._result.result}")
-            print("-- Disarming")
+            self.get_logger().info(f"Starting offboard mode failed with error code: {error._result.result}")
+            self.get_logger().info("-- Disarming")
             await self.drone.action.disarm()
             return
 
         async def print_z_velocity(drone):
             async for odom in self.drone.telemetry.position_velocity_ned():
-                print(f"{odom.velocity.north_m_s} {odom.velocity.down_m_s}")
+                self.get_logger().info(f"{odom.velocity.north_m_s} {odom.velocity.down_m_s}")
 
         asyncio.ensure_future(print_z_velocity(self.drone))
 
-        await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, -10.0, 0.0))
+        await self.drone.offboard.set_position_ned(PositionNedYaw(0.0, 0.0, self.altitude, 0.0))
         await asyncio.sleep(5)
-
-        rrtResponse.path_x = 20
-        rrtResponse.path_y = 20
 
         for i in range(len(rrtResponse.path_x)):
 
-            await self.drone.offboard.set_position_ned(PositionNedYaw(rrtResponse.path_x[i], rrtResponse.path_y[i], -10.0, 0.0))
+            await self.drone.offboard.set_position_ned(PositionNedYaw(rrtResponse.path_x[i], rrtResponse.path_y[i], self.altitude, 0.0))
             await asyncio.sleep(5)
 
         await self.drone.action.land()

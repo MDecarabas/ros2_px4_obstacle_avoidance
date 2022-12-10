@@ -1,1 +1,1 @@
-# ros2_px4_obstacle_avoidance
+# ROS2_px4_autopilot_control
