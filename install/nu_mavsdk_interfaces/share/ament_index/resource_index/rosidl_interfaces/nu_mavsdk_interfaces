@@ -1,4 +1,0 @@
-srv/RRTService.idl
-srv/RRTService.srv
-srv/RRTService_Request.msg
-srv/RRTService_Response.msg
