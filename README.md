@@ -1,4 +1,4 @@
-# Final_Project_Mixotics Package: Sir Mix-a-lot, the cafe bot!
+# Final Capstone Project: ROS2 Autonomous Drone Flight
 
 Authors and Maintainers: 
 - **Eric Codrea**
