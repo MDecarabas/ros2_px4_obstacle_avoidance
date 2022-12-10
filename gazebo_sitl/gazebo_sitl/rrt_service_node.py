@@ -6,11 +6,8 @@ import math
 
 from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path given start coordinates and end goal
 
-
-class RRT(Node):
+class POINT(Node):
     def __init__(self, x, y):
-        super().__init__('rrt_service')
-        self.srv = self.create_service(RRTService, 'rrt_points', self.rrt_points)
         self.x = x
         self.y = y
         self.parent = None
@@ -22,7 +19,7 @@ def get_random_point(x_min, x_max, y_min, y_max):
     '''
     x = random.uniform(x_min, x_max)
     y = random.uniform(y_min, y_max)
-    return RRT(x, y)
+    return POINT(x, y)
 
 def get_nearest_node(tree, point):
     '''
@@ -77,33 +74,37 @@ def rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
                 return get_path(goal)
     return None
 
-def rrt_points(self, request, response):
-    # start = RRT(0, 0)
-    # goal = RRT(20, 5)
-    start = request.start
-    goal = request.goal
+class RRT(Node):
+    def __init__(self):
+        super().__init__('rrt_service')
+        self.srv = self.create_service(RRTService, 'rrt_points', self.rrt_points)
 
-# 7.5 x 0.2
-    obstacles = [[(1, 1), (3.5, -3.5)], [(-2.5, 6), (3.5, 6.5)], [(6, 6), (-0.5, 6.5)],  [(5.5, 13.5), (-2.5, -6.5)], [(19, 19), (3.5, -3.5)]]
-    x_min = -5                                                                  #minimum x to explore in 2d space
-    x_max = 25                                                                  #maximum x to explore in 2d space
-    y_min = -7                                                                  #minimum y to explore in 2d space
-    y_max = 7                                                                   #maximum y to explore in 2d space
-    step_size = 0.5                                                             # step size
-    max_iter = 1000                                                             # Number of maximum Steps
-    path = rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
-    if path:
-        response.path_x = []
-        response.path_y = []
-        for i in range(len(path) - 1):
-            response.path_x.append(path[i].x)
-            response.path_y.append(path[i].y)       
-        response.path_x.reverse()
-        response.path_y.reverse()
-    else:
+    def rrt_points(self, request, response):
+        start = POINT(request.start[0], request.start[1])
+        goal = POINT(request.goal[0], request.start[1])
+
+
+    # 7.5 x 0.2
+        obstacles = [[(1, 1), (3.5, -3.5)], [(-2.5, 6), (3.5, 6.5)], [(6, 6), (-0.5, 6.5)],  [(5.5, 13.5), (-2.5, -6.5)], [(19, 19), (3.5, -3.5)]]
+        x_min = -5                                                                  #minimum x to explore in 2d space
+        x_max = 25                                                                  #maximum x to explore in 2d space
+        y_min = -7                                                                  #minimum y to explore in 2d space
+        y_max = 7                                                                   #maximum y to explore in 2d space
+        step_size = 0.5                                                             # step size
+        max_iter = 1000                                                             # Number of maximum Steps
         path = rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
+        if path:
+            response.path_x = []
+            response.path_y = []
+            for i in range(len(path) - 1):
+                response.path_x.append(path[i].x)
+                response.path_y.append(path[i].y)       
+            response.path_x.reverse()
+            response.path_y.reverse()
+        else:
+            path = rrt(start, goal, obstacles, x_min, x_max, y_min, y_max, step_size, max_iter)
 
-    return response
+        return response
 
 
 def main(args=None):

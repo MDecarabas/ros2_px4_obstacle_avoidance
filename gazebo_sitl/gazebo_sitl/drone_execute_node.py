@@ -6,7 +6,7 @@ from mavsdk import System
 from mavsdk.offboard import (PositionNedYaw, OffboardError)
 
 from rclpy.node import Node
-from rclpy.callback_groups import ReentrantCallbackGroup
+from rcl_interfaces.msg import ParameterDescriptor
 
 from nu_mavsdk_interfaces.srv import RRTService #Service to return RRT Path given start coordinates and end goal
 
@@ -17,7 +17,9 @@ class DroneExecute(Node):
         '''
 
         super().__init__('drone_execute')
-        self.cbgroup = ReentrantCallbackGroup()
+
+        self.declare_parameter("x", 0.0, ParameterDescriptor(
+            description="The x translation from base to world frame"))
 
         self.droneSetup = self.droneInit()
 
@@ -26,7 +28,6 @@ class DroneExecute(Node):
 
         while not self.RRT_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
-
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.droneInit())
 
@@ -69,8 +70,8 @@ class DroneExecute(Node):
 
     async def run(self):
 
-        start = [0, 0]
-        goal = [0, 0]
+        start = [0.0, 0.0]
+        goal = [0.0, 0.0]
 
         rrtResponse = self.rrtRequest(start, goal)
 

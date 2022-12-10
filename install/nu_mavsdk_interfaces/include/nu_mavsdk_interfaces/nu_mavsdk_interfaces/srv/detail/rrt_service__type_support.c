@@ -12,6 +12,11 @@
 #include "nu_mavsdk_interfaces/srv/detail/rrt_service__struct.h"
 
 
+// Include directives for member types
+// Member `start`
+// Member `goal`
+#include "rosidl_runtime_c/primitives_sequence_functions.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -31,40 +36,150 @@ void nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspec
   nu_mavsdk_interfaces__srv__RRTService_Request__fini(message_memory);
 }
 
+size_t nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__size_function__RRTService_Request__start(
+  const void * untyped_member)
+{
+  const rosidl_runtime_c__double__Sequence * member =
+    (const rosidl_runtime_c__double__Sequence *)(untyped_member);
+  return member->size;
+}
+
+const void * nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_const_function__RRTService_Request__start(
+  const void * untyped_member, size_t index)
+{
+  const rosidl_runtime_c__double__Sequence * member =
+    (const rosidl_runtime_c__double__Sequence *)(untyped_member);
+  return &member->data[index];
+}
+
+void * nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_function__RRTService_Request__start(
+  void * untyped_member, size_t index)
+{
+  rosidl_runtime_c__double__Sequence * member =
+    (rosidl_runtime_c__double__Sequence *)(untyped_member);
+  return &member->data[index];
+}
+
+void nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__fetch_function__RRTService_Request__start(
+  const void * untyped_member, size_t index, void * untyped_value)
+{
+  const double * item =
+    ((const double *)
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_const_function__RRTService_Request__start(untyped_member, index));
+  double * value =
+    (double *)(untyped_value);
+  *value = *item;
+}
+
+void nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__assign_function__RRTService_Request__start(
+  void * untyped_member, size_t index, const void * untyped_value)
+{
+  double * item =
+    ((double *)
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_function__RRTService_Request__start(untyped_member, index));
+  const double * value =
+    (const double *)(untyped_value);
+  *item = *value;
+}
+
+bool nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__resize_function__RRTService_Request__start(
+  void * untyped_member, size_t size)
+{
+  rosidl_runtime_c__double__Sequence * member =
+    (rosidl_runtime_c__double__Sequence *)(untyped_member);
+  rosidl_runtime_c__double__Sequence__fini(member);
+  return rosidl_runtime_c__double__Sequence__init(member, size);
+}
+
+size_t nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__size_function__RRTService_Request__goal(
+  const void * untyped_member)
+{
+  const rosidl_runtime_c__double__Sequence * member =
+    (const rosidl_runtime_c__double__Sequence *)(untyped_member);
+  return member->size;
+}
+
+const void * nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_const_function__RRTService_Request__goal(
+  const void * untyped_member, size_t index)
+{
+  const rosidl_runtime_c__double__Sequence * member =
+    (const rosidl_runtime_c__double__Sequence *)(untyped_member);
+  return &member->data[index];
+}
+
+void * nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_function__RRTService_Request__goal(
+  void * untyped_member, size_t index)
+{
+  rosidl_runtime_c__double__Sequence * member =
+    (rosidl_runtime_c__double__Sequence *)(untyped_member);
+  return &member->data[index];
+}
+
+void nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__fetch_function__RRTService_Request__goal(
+  const void * untyped_member, size_t index, void * untyped_value)
+{
+  const double * item =
+    ((const double *)
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_const_function__RRTService_Request__goal(untyped_member, index));
+  double * value =
+    (double *)(untyped_value);
+  *value = *item;
+}
+
+void nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__assign_function__RRTService_Request__goal(
+  void * untyped_member, size_t index, const void * untyped_value)
+{
+  double * item =
+    ((double *)
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_function__RRTService_Request__goal(untyped_member, index));
+  const double * value =
+    (const double *)(untyped_value);
+  *item = *value;
+}
+
+bool nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__resize_function__RRTService_Request__goal(
+  void * untyped_member, size_t size)
+{
+  rosidl_runtime_c__double__Sequence * member =
+    (rosidl_runtime_c__double__Sequence *)(untyped_member);
+  rosidl_runtime_c__double__Sequence__fini(member);
+  return rosidl_runtime_c__double__Sequence__init(member, size);
+}
+
 static rosidl_typesupport_introspection_c__MessageMember nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__RRTService_Request_message_member_array[2] = {
   {
     "start",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
-    false,  // is array
+    true,  // is array
     0,  // array size
     false,  // is upper bound
     offsetof(nu_mavsdk_interfaces__srv__RRTService_Request, start),  // bytes offset in struct
     NULL,  // default value
-    NULL,  // size() function pointer
-    NULL,  // get_const(index) function pointer
-    NULL,  // get(index) function pointer
-    NULL,  // fetch(index, &value) function pointer
-    NULL,  // assign(index, value) function pointer
-    NULL  // resize(index) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__size_function__RRTService_Request__start,  // size() function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_const_function__RRTService_Request__start,  // get_const(index) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_function__RRTService_Request__start,  // get(index) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__fetch_function__RRTService_Request__start,  // fetch(index, &value) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__assign_function__RRTService_Request__start,  // assign(index, value) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__resize_function__RRTService_Request__start  // resize(index) function pointer
   },
   {
     "goal",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
-    false,  // is array
+    true,  // is array
     0,  // array size
     false,  // is upper bound
     offsetof(nu_mavsdk_interfaces__srv__RRTService_Request, goal),  // bytes offset in struct
     NULL,  // default value
-    NULL,  // size() function pointer
-    NULL,  // get_const(index) function pointer
-    NULL,  // get(index) function pointer
-    NULL,  // fetch(index, &value) function pointer
-    NULL,  // assign(index, value) function pointer
-    NULL  // resize(index) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__size_function__RRTService_Request__goal,  // size() function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_const_function__RRTService_Request__goal,  // get_const(index) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__get_function__RRTService_Request__goal,  // get(index) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__fetch_function__RRTService_Request__goal,  // fetch(index, &value) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__assign_function__RRTService_Request__goal,  // assign(index, value) function pointer
+    nu_mavsdk_interfaces__srv__RRTService_Request__rosidl_typesupport_introspection_c__resize_function__RRTService_Request__goal  // resize(index) function pointer
   }
 };
 
@@ -120,7 +235,8 @@ ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspecti
 // Include directives for member types
 // Member `path_x`
 // Member `path_y`
-#include "rosidl_runtime_c/primitives_sequence_functions.h"
+// already included above
+// #include "rosidl_runtime_c/primitives_sequence_functions.h"
 
 #ifdef __cplusplus
 extern "C"

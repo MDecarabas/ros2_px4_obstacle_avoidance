@@ -17,11 +17,16 @@ extern "C"
 
 // Constants defined in the message
 
+// Include directives for member types
+// Member 'start'
+// Member 'goal'
+#include "rosidl_runtime_c/primitives_sequence.h"
+
 /// Struct defined in srv/RRTService in the package nu_mavsdk_interfaces.
 typedef struct nu_mavsdk_interfaces__srv__RRTService_Request
 {
-  double start;
-  double goal;
+  rosidl_runtime_c__double__Sequence start;
+  rosidl_runtime_c__double__Sequence goal;
 } nu_mavsdk_interfaces__srv__RRTService_Request;
 
 // Struct for a sequence of nu_mavsdk_interfaces__srv__RRTService_Request.
@@ -40,7 +45,8 @@ typedef struct nu_mavsdk_interfaces__srv__RRTService_Request__Sequence
 // Include directives for member types
 // Member 'path_x'
 // Member 'path_y'
-#include "rosidl_runtime_c/primitives_sequence.h"
+// already included above
+// #include "rosidl_runtime_c/primitives_sequence.h"
 
 /// Struct defined in srv/RRTService in the package nu_mavsdk_interfaces.
 typedef struct nu_mavsdk_interfaces__srv__RRTService_Response

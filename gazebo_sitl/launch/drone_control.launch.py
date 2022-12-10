@@ -13,20 +13,19 @@ from launch.actions import DeclareLaunchArgument
 def generate_launch_description():
 
     gazebo_sitl_path = get_package_share_path('gazebo_sitl')
-    tag_yaml_path = gazebo_sitl_path / 'config/tag.yaml'
-    default_rviz_config_path = gazebo_sitl_path / 'april.rviz'
-    calibration_path = gazebo_sitl_path / 'calibration.yaml'
+    drone_yaml_path = gazebo_sitl_path / 'config/drone.yaml'
+    rrt_yaml_path = gazebo_sitl_path / 'config/rrt.yaml'
 
     drone_execute_node = Node(
         package='gazebo_sitl',
-        executable='drone_execute_node'
-        # parameters=[tag_yaml_path]
+        executable='drone_execute_node',
+        parameters=[drone_yaml_path]
         )
 
     rrt_service_node = Node(
         package='gazebo_sitl',
-        executable='rrt_service_node'
-        # parameters=[calibration_path]
+        executable='rrt_service_node',
+        parameters=[rrt_yaml_path]
         )
 
     return LaunchDescription([

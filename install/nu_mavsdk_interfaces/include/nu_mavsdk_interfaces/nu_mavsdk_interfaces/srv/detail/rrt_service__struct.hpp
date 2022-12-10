@@ -35,42 +35,32 @@ struct RRTService_Request_
 
   explicit RRTService_Request_(rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
   {
-    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
-      rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
-    {
-      this->start = 0.0;
-      this->goal = 0.0;
-    }
+    (void)_init;
   }
 
   explicit RRTService_Request_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
   {
+    (void)_init;
     (void)_alloc;
-    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
-      rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
-    {
-      this->start = 0.0;
-      this->goal = 0.0;
-    }
   }
 
   // field types and members
   using _start_type =
-    double;
+    std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>>;
   _start_type start;
   using _goal_type =
-    double;
+    std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>>;
   _goal_type goal;
 
   // setters for named parameter idiom
   Type & set__start(
-    const double & _arg)
+    const std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> & _arg)
   {
     this->start = _arg;
     return *this;
   }
   Type & set__goal(
-    const double & _arg)
+    const std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> & _arg)
   {
     this->goal = _arg;
     return *this;

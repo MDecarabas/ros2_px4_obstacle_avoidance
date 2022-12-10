@@ -10,6 +10,11 @@
 
 #include "rcutils/allocator.h"
 
+// Include directives for member types
+// Member `start`
+// Member `goal`
+#include "rosidl_runtime_c/primitives_sequence_functions.h"
+
 bool
 nu_mavsdk_interfaces__srv__RRTService_Request__init(nu_mavsdk_interfaces__srv__RRTService_Request * msg)
 {
@@ -17,7 +22,15 @@ nu_mavsdk_interfaces__srv__RRTService_Request__init(nu_mavsdk_interfaces__srv__R
     return false;
   }
   // start
+  if (!rosidl_runtime_c__double__Sequence__init(&msg->start, 0)) {
+    nu_mavsdk_interfaces__srv__RRTService_Request__fini(msg);
+    return false;
+  }
   // goal
+  if (!rosidl_runtime_c__double__Sequence__init(&msg->goal, 0)) {
+    nu_mavsdk_interfaces__srv__RRTService_Request__fini(msg);
+    return false;
+  }
   return true;
 }
 
@@ -28,7 +41,9 @@ nu_mavsdk_interfaces__srv__RRTService_Request__fini(nu_mavsdk_interfaces__srv__R
     return;
   }
   // start
+  rosidl_runtime_c__double__Sequence__fini(&msg->start);
   // goal
+  rosidl_runtime_c__double__Sequence__fini(&msg->goal);
 }
 
 bool
@@ -38,11 +53,15 @@ nu_mavsdk_interfaces__srv__RRTService_Request__are_equal(const nu_mavsdk_interfa
     return false;
   }
   // start
-  if (lhs->start != rhs->start) {
+  if (!rosidl_runtime_c__double__Sequence__are_equal(
+      &(lhs->start), &(rhs->start)))
+  {
     return false;
   }
   // goal
-  if (lhs->goal != rhs->goal) {
+  if (!rosidl_runtime_c__double__Sequence__are_equal(
+      &(lhs->goal), &(rhs->goal)))
+  {
     return false;
   }
   return true;
@@ -57,9 +76,17 @@ nu_mavsdk_interfaces__srv__RRTService_Request__copy(
     return false;
   }
   // start
-  output->start = input->start;
+  if (!rosidl_runtime_c__double__Sequence__copy(
+      &(input->start), &(output->start)))
+  {
+    return false;
+  }
   // goal
-  output->goal = input->goal;
+  if (!rosidl_runtime_c__double__Sequence__copy(
+      &(input->goal), &(output->goal)))
+  {
+    return false;
+  }
   return true;
 }
 
@@ -246,7 +273,8 @@ nu_mavsdk_interfaces__srv__RRTService_Request__Sequence__copy(
 // Include directives for member types
 // Member `path_x`
 // Member `path_y`
-#include "rosidl_runtime_c/primitives_sequence_functions.h"
+// already included above
+// #include "rosidl_runtime_c/primitives_sequence_functions.h"
 
 bool
 nu_mavsdk_interfaces__srv__RRTService_Response__init(nu_mavsdk_interfaces__srv__RRTService_Response * msg)

@@ -6,9 +6,9 @@
 module nu_mavsdk_interfaces {
   module srv {
     struct RRTService_Request {
-      double start;
+      sequence<double> start;
 
-      double goal;
+      sequence<double> goal;
     };
     struct RRTService_Response {
       sequence<double> path_x;

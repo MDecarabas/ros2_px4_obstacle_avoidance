@@ -27,15 +27,37 @@ inline void to_flow_style_yaml(
   out << "{";
   // member: start
   {
-    out << "start: ";
-    rosidl_generator_traits::value_to_yaml(msg.start, out);
+    if (msg.start.size() == 0) {
+      out << "start: []";
+    } else {
+      out << "start: [";
+      size_t pending_items = msg.start.size();
+      for (auto item : msg.start) {
+        rosidl_generator_traits::value_to_yaml(item, out);
+        if (--pending_items > 0) {
+          out << ", ";
+        }
+      }
+      out << "]";
+    }
     out << ", ";
   }
 
   // member: goal
   {
-    out << "goal: ";
-    rosidl_generator_traits::value_to_yaml(msg.goal, out);
+    if (msg.goal.size() == 0) {
+      out << "goal: []";
+    } else {
+      out << "goal: [";
+      size_t pending_items = msg.goal.size();
+      for (auto item : msg.goal) {
+        rosidl_generator_traits::value_to_yaml(item, out);
+        if (--pending_items > 0) {
+          out << ", ";
+        }
+      }
+      out << "]";
+    }
   }
   out << "}";
 }  // NOLINT(readability/fn_size)
@@ -49,9 +71,19 @@ inline void to_block_style_yaml(
     if (indentation > 0) {
       out << std::string(indentation, ' ');
     }
-    out << "start: ";
-    rosidl_generator_traits::value_to_yaml(msg.start, out);
-    out << "\n";
+    if (msg.start.size() == 0) {
+      out << "start: []\n";
+    } else {
+      out << "start:\n";
+      for (auto item : msg.start) {
+        if (indentation > 0) {
+          out << std::string(indentation, ' ');
+        }
+        out << "- ";
+        rosidl_generator_traits::value_to_yaml(item, out);
+        out << "\n";
+      }
+    }
   }
 
   // member: goal
@@ -59,9 +91,19 @@ inline void to_block_style_yaml(
     if (indentation > 0) {
       out << std::string(indentation, ' ');
     }
-    out << "goal: ";
-    rosidl_generator_traits::value_to_yaml(msg.goal, out);
-    out << "\n";
+    if (msg.goal.size() == 0) {
+      out << "goal: []\n";
+    } else {
+      out << "goal:\n";
+      for (auto item : msg.goal) {
+        if (indentation > 0) {
+          out << std::string(indentation, ' ');
+        }
+        out << "- ";
+        rosidl_generator_traits::value_to_yaml(item, out);
+        out << "\n";
+      }
+    }
   }
 }  // NOLINT(readability/fn_size)
 
@@ -111,11 +153,11 @@ inline const char * name<nu_mavsdk_interfaces::srv::RRTService_Request>()
 
 template<>
 struct has_fixed_size<nu_mavsdk_interfaces::srv::RRTService_Request>
-  : std::integral_constant<bool, true> {};
+  : std::integral_constant<bool, false> {};
 
 template<>
 struct has_bounded_size<nu_mavsdk_interfaces::srv::RRTService_Request>
-  : std::integral_constant<bool, true> {};
+  : std::integral_constant<bool, false> {};
 
 template<>
 struct is_message<nu_mavsdk_interfaces::srv::RRTService_Request>
